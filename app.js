@@ -120,13 +120,25 @@ function prepareDataForSearch(data) {
     }
 }
 
-// Use local proxy endpoint dynamically (supports PC, iPhone, Android over local network).
+// Use local proxy endpoint dynamically (supports PC, GitHub Pages, iPhone, Android over Tailscale/IP).
 function getApiUrl() {
     const saved = localStorage.getItem('apiBaseUrl');
     if (saved && saved.trim() !== "") return saved;
-    const host = window.location.hostname || 'localhost';
+    
+    let host = localStorage.getItem('serverHost');
+    
+    // If no host saved, or host is default localhost on GitHub Pages
+    if (!host || (host === 'localhost' && window.location.hostname.includes('github.io'))) {
+        host = 'localhost';
+    }
+    
+    if (host.startsWith('http://') || host.startsWith('https://')) {
+        return host.endsWith('/api') ? host : `${host}/api`;
+    }
+    
     return `http://${host}:8003/api`;
 }
+
 
 
 // Generate Authorization Header based on stored credentials
