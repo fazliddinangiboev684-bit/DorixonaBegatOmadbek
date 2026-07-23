@@ -1,0 +1,43 @@
+<svg viewBox="0 0 110 100" width="512" height="465" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background glow gradient -->
+    <radialGradient id="glow-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7f00ff" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#e100ff" stop-opacity="0" />
+    </radialGradient>
+    
+    <!-- Main Star Gradient (Futuristic Purple-Magenta-Orange) -->
+    <linearGradient id="main-star-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7f00ff" />
+      <stop offset="50%" stop-color="#ff007f" />
+      <stop offset="100%" stop-color="#ff7f00" />
+    </linearGradient>
+    
+    <!-- Swoosh Gradient (Neon Cyan-Blue) -->
+    <linearGradient id="swoosh-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+
+    <!-- Star Glow Outline Gradient -->
+    <linearGradient id="outline-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#7f00ff" stop-opacity="0.8" />
+    </linearGradient>
+  </defs>
+
+  <!-- Ambient radial background glow -->
+  <circle cx="50" cy="50" r="45" fill="url(#glow-grad)" />
+
+  <!-- Outer glowing outline star -->
+  <path d="M 50,8 L 62,36 L 92,36 L 68,54 L 78,84 L 50,68 L 22,84 L 32,54 L 8,36 L 38,36 Z" 
+        fill="none" stroke="url(#outline-grad)" stroke-width="2.5" stroke-linejoin="round" />
+
+  <!-- Main star body -->
+  <path d="M 50,11 L 61,37 L 90,37 L 67,54 L 76,82 L 50,67 L 24,82 L 33,54 L 10,37 L 39,37 Z" 
+        fill="url(#main-star-grad)" />
+
+  <!-- Sleek futuristic overlay swoosh (tapered ribbon wrapping the star) -->
+  <path d="M 5,75 Q 45,65 85,25 Q 95,15 105,10 C 95,20 65,55 5,75 Z" 
+        fill="url(#swoosh-grad)" />
+</svg>
