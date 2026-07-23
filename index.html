@@ -582,8 +582,17 @@
                     <div class="settings-input-wrapper">
                         <input type="text" id="settings-service" placeholder="URL сервис номи (Root URL)" readonly>
                     </div>
+
+                    <div class="settings-input-wrapper" style="margin-top: 10px;">
+                        <label for="settings-lang" style="display:block; font-size: 13px; margin-bottom: 6px; color: #a0aec0;" id="label-settings-lang">Тилни танлаш / Tilni tanlash</label>
+                        <select id="settings-lang" style="width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; font-size: 14px; outline: none; cursor: pointer;">
+                            <option value="cyrl" style="background: #1a1e29; color: #fff;">Ўзбекча (Кирилл)</option>
+                            <option value="latn" style="background: #1a1e29; color: #fff;">O'zbekcha (Lotin)</option>
+                        </select>
+                    </div>
                     
                     <div class="settings-buttons-row">
+
                         <button id="test-settings-btn" class="btn-test">Текшириш</button>
                         <button id="save-settings-btn" class="btn-save">Сақлаш</button>
                     </div>

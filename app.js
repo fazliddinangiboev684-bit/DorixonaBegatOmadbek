@@ -485,6 +485,75 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+/* ==================== LATIN / CYRILLIC I18N SYSTEM ==================== */
+let currentLang = localStorage.getItem('appLang') || 'cyrl';
+
+function toLatin(str) {
+    if (!str || typeof str !== 'string') return str;
+    if (currentLang !== 'latn') return str;
+
+    const map = {
+        'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'Yo', 'Ж': 'J', 'З': 'Z',
+        'И': 'I', 'Й': 'Y', 'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N', 'О': 'O', 'П': 'P', 'Р': 'R',
+        'С': 'S', 'Т': 'T', 'У': 'U', 'Ф': 'F', 'Х': 'X', 'Ц': 'Ts', 'Ч': 'Ch', 'Ш': 'Sh', 'Щ': 'Sh',
+        'Ъ': "'", 'Ь': '', 'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya', 'Ў': "O'", 'Қ': 'Q', 'Ғ': "G'", 'Ҳ': 'H',
+        'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo', 'ж': 'j', 'з': 'z',
+        'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r',
+        'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'x', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh', 'щ': 'sh',
+        'ъ': "'", 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya', 'ў': "o'", 'қ': 'q', 'ғ': "g'", 'ҳ': 'h'
+    };
+
+    return str.replace(/[А-Яа-яЎўҚқҒғҲҳЁё]/g, letter => map[letter] || letter);
+}
+
+function applyLanguage() {
+    currentLang = localStorage.getItem('appLang') || 'cyrl';
+    const isLatn = currentLang === 'latn';
+
+    const langSelect = document.getElementById("settings-lang");
+    if (langSelect) langSelect.value = currentLang;
+
+    const subtitle = document.querySelector(".subtitle");
+    if (subtitle) subtitle.textContent = isLatn ? "Tizimga xush kelibsiz" : "Тизимга хуш келибсиз";
+
+    const phoneLbl = document.querySelector("label[for='phone']");
+    if (phoneLbl) phoneLbl.textContent = isLatn ? "Telefon raqam" : "Телефон рақам";
+
+    const passLbl = document.querySelector("label[for='password']");
+    if (passLbl) passLbl.textContent = isLatn ? "Parol" : "Парол";
+
+    const loginBtn = document.getElementById("login-submit-btn");
+    if (loginBtn) loginBtn.textContent = isLatn ? "Kirish" : "Кириш";
+
+    const dateFromLbl = document.querySelector("label[for='date-from']");
+    if (dateFromLbl) dateFromLbl.textContent = isLatn ? "Dan:" : "Дан:";
+
+    const dateToLbl = document.querySelector("label[for='date-to']");
+    if (dateToLbl) dateToLbl.textContent = isLatn ? "Gacha:" : "Гача:";
+
+    const testBtn = document.getElementById("test-settings-btn");
+    if (testBtn) testBtn.textContent = isLatn ? "Tekshirish" : "Текшириш";
+
+    const saveBtn = document.getElementById("save-settings-btn");
+    if (saveBtn) saveBtn.textContent = isLatn ? "Saqlash" : "Сақлаш";
+
+    const labelLang = document.getElementById("label-settings-lang");
+    if (labelLang) labelLang.textContent = isLatn ? "Tilni tanlash" : "Тилни танлаш";
+
+    document.querySelectorAll(".card-title").forEach(el => {
+        let txt = el.textContent.trim();
+        if (txt.includes("сотув") || txt.includes("sotuv")) el.textContent = isLatn ? "Bugungi sotuv" : "Бугунги сотув";
+        else if (txt.includes("кирими") || txt.includes("kirimi")) el.textContent = isLatn ? "Tovar kirimi" : "Товар кирими";
+        else if (txt.includes("чиқимлари") || txt.includes("chiqimlari")) el.textContent = isLatn ? "Kassa chiqimlari" : "Касса чиқимлари";
+        else if (txt.includes("Қарздорлар") || txt.includes("Qarzdorlar")) el.textContent = isLatn ? "Qarzdorlar ro'yxati" : "Қарздорлар рўйхати";
+        else if (txt.includes("қолдиғи") || txt.includes("qoldig'i")) el.textContent = isLatn ? "Tovar qoldig'i" : "Товар қолдиғи";
+    });
+
+    if (dashboardData) {
+        renderDashboard();
+    }
+}
+
 /* ==================== SETTINGS MODAL CONTROLS ==================== */
 let settingsEditMode = false;
 
@@ -523,6 +592,8 @@ function openSettingsModal() {
     document.getElementById("settings-host").value = localStorage.getItem('serverHost') || 'localhost';
     document.getElementById("settings-pub").value = localStorage.getItem('serverPublication') || 'bossAPI';
     document.getElementById("settings-service").value = localStorage.getItem('serverService') || 'app';
+    const langSel = document.getElementById("settings-lang");
+    if (langSel) langSel.value = localStorage.getItem('appLang') || 'cyrl';
     
     // Set all to readOnly initially
     const inputs = [
@@ -553,11 +624,11 @@ async function testServerConnection() {
     const service = document.getElementById("settings-service").value.trim();
     
     if (!host || !pub || !service) {
-        alert("Илтимос, барча майдонларни киритинг!");
+        alert(currentLang === 'latn' ? "Iltimos, barcha maydonlarni kiriting!" : "Илтимос, барча майдонларни киритинг!");
         return;
     }
     
-    showLoader("1С билан уланиш ва ходимлар маълумотлари юкланмоқда...");
+    showLoader(currentLang === 'latn' ? "1C bilan ulanish..." : "1С билан уланиш ва ходимлар маълумотлари юкланмоқда...");
     
     const authHeader = getAuthHeader();
     const proxyUrl = getApiUrl();
@@ -591,11 +662,11 @@ async function testServerConnection() {
             let empMsg = "";
             if (data.ХодимларЛисти && Array.isArray(data.ХодимларЛисти)) {
                 localStorage.setItem('employees', JSON.stringify(data.ХодимларЛисти));
-                empMsg = `\n\n1С дан ${data.ХодимларЛисти.length} та ходим маълумотлари юкланди ва янгиланди.`;
+                empMsg = currentLang === 'latn' ? `\n\n1C dan ${data.ХодимларЛисти.length} ta xodim ma'lumotlari yuklandi.` : `\n\n1С дан ${data.ХодимларЛисти.length} та ходим маълумотлари юкланди ва янгиланди.`;
             }
             if (data.ФирмаНоми) {
                 const headerBrandEl = document.getElementById("header-company-name");
-                if (headerBrandEl) headerBrandEl.textContent = data.ФирмаНоми.toUpperCase();
+                if (headerBrandEl) headerBrandEl.textContent = toLatin(data.ФирмаНоми.toUpperCase());
             }
             
             // Save settings as well
@@ -603,14 +674,14 @@ async function testServerConnection() {
             localStorage.setItem('serverPublication', pub);
             localStorage.setItem('serverService', service);
 
-            alert("Уланиш муваффақиятли бажарилди!" + empMsg);
+            alert((currentLang === 'latn' ? "Ulanish muvaffaqiyatli bajarildi!" : "Уланиш муваффақиятли бажарилди!") + empMsg);
             closeSettingsModal();
         } else {
             alert(`Уланишда хатолик! Сервер коди: ${response.status}`);
         }
     } catch (err) {
         console.error("Test connection error:", err);
-        alert("1С Серверга ёки проксига уланиб бўлмади!\n\nИлтимос, қуйидагиларни текширинг:\n1. python proxy.py юритилганми?\n2. 1С Конфигуратордан '" + pub + "' номи билан веб-серверга публикация қилинганми?");
+        alert("1С Серверга ёки проксига уланиб бўлмади!");
     } finally {
         hideLoader();
     }
@@ -621,32 +692,29 @@ function saveSettings() {
     const host = document.getElementById("settings-host").value.trim();
     const pub = document.getElementById("settings-pub").value.trim();
     const service = document.getElementById("settings-service").value.trim();
+    const lang = document.getElementById("settings-lang")?.value || 'cyrl';
 
     if (!host || !pub || !service) {
-        alert("Илтимос, барча майдонларни тўлдиринг!");
+        alert(currentLang === 'latn' ? "Iltimos, barcha maydonlarni to'ldiring!" : "Илтимос, барча майдонларни тўлдиринг!");
         return;
     }
 
     localStorage.setItem("serverHost", host);
     localStorage.setItem("serverPublication", pub);
     localStorage.setItem("serverService", service);
-
-    // Clear employees cache and cached dashboard data so they sync with the new server's employees
-    localStorage.removeItem("employees");
-    localStorage.removeItem("cachedDashboardData");
-    localStorage.removeItem("userPhone");
-    localStorage.removeItem("userPassword");
+    localStorage.setItem("appLang", lang);
 
     API_URL = getApiUrl();
+    applyLanguage();
     closeSettingsModal();
-    alert("Созламалар муваффақиятли сақланди!");
+    alert(lang === 'latn' ? "Sozlamalar muvaffaqiyatli saqlandi!" : "Созламалар муваффақиятли сақланди!");
     loadFirmName();
     
-    // Reload dashboard data if user is logged in
     if (localStorage.getItem('userPhone') && localStorage.getItem('userPassword')) {
         loadDashboardData();
     }
 }
+
 
 /* ==================== AUTHENTICATION ==================== */
 async function handleLoginSubmit(e) {
