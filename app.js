@@ -561,6 +561,54 @@ function applyLanguage() {
         else if (txt.includes("қолдиғи") || txt.includes("qoldig'i")) el.textContent = isLatn ? "Tovar qoldig'i" : "Товар қолдиғи";
     });
 
+    // Menu labels (home screen grid)
+    const menuLabels = {
+        'menu-btn-ostatka': { cyrl: 'Остатка', latn: 'Ostatka' },
+        'menu-btn-tovar':   { cyrl: 'Товарлар', latn: "Tovarlar" },
+        'menu-btn-savdo':   { cyrl: 'Савдо', latn: 'Savdo' },
+        'menu-btn-otkaz':   { cyrl: 'Отказлар', latn: "Otkazlar" },
+        'menu-btn-receipts':{ cyrl: 'Товар кирими', latn: 'Tovar kirimi' },
+        'menu-btn-expenses':{ cyrl: 'Касса чиқими', latn: 'Kassa chiqimi' }
+    };
+    Object.entries(menuLabels).forEach(([id, txt]) => {
+        const el = document.querySelector(`#${id} .menu-label`);
+        if (el) el.textContent = isLatn ? txt.latn : txt.cyrl;
+    });
+
+    // Logout button
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) logoutBtn.innerHTML = isLatn ? '⏻ Chiqish' : '⏻ Чиқиш';
+
+    // Card labels on Ostatka tab
+    const cardLabels = [
+        ['card-label', "Таъминотчилар Ҳаққи", "Ta'minotchilar Haqqi"],
+        ['card-label', "Харидорлар Қарзи", "Xaridorlar Qarzi"],
+        ['card-label', "Товарлар Қолдиғи", "Tovarlar Qoldig'i"],
+        ['card-label', "Муддати яқин қолдиқлар", "Muddati yaqin qoldiqlar"]
+    ];
+    document.querySelectorAll('.card-label').forEach(el => {
+        const txt = el.textContent.trim();
+        if (txt === "Таъминотчилар Ҳаққи" || txt === "Ta'minotchilar Haqqi")
+            el.textContent = isLatn ? "Ta'minotchilar Haqqi" : "Таъминотчилар Ҳаққи";
+        else if (txt === "Харидорлар Қарзи" || txt === "Xaridorlar Qarzi")
+            el.textContent = isLatn ? "Xaridorlar Qarzi" : "Харидорлар Қарзи";
+        else if (txt === "Товарлар Қолдиғи" || txt === "Tovarlar Qoldig'i")
+            el.textContent = isLatn ? "Tovarlar Qoldig'i" : "Товарлар Қолдиғи";
+        else if (txt === "Муддати яқин қолдиқлар" || txt === "Muddati yaqin qoldiqlar")
+            el.textContent = isLatn ? "Muddati yaqin qoldiqlar" : "Муддати яқин қолдиқлар";
+    });
+
+    // Sub-screen titles
+    const subTitles = document.querySelectorAll('.sub-title');
+    subTitles.forEach(el => {
+        const txt = el.textContent.trim();
+        if (txt === 'Таъминотчилар' || txt === "Ta'minotchilar") el.textContent = isLatn ? "Ta'minotchilar" : 'Таъминотчилар';
+        else if (txt === 'Харидорлар' || txt === 'Xaridorlar') el.textContent = isLatn ? 'Xaridorlar' : 'Харидорлар';
+        else if (txt === 'Товар кирими' || txt === 'Tovar kirimi') el.textContent = isLatn ? 'Tovar kirimi' : 'Товар кирими';
+        else if (txt === 'Касса чиқими' || txt === 'Kassa chiqimi') el.textContent = isLatn ? 'Kassa chiqimi' : 'Касса чиқими';
+        else if (txt === 'Товарлар' || txt === 'Tovarlar') el.textContent = isLatn ? 'Tovarlar' : 'Товарлар';
+    });
+
     if (dashboardData) {
         renderDashboard();
     }
