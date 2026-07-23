@@ -722,20 +722,26 @@ async function handleLoginSubmit(e) {
     const phone = document.getElementById("phone").value;
     const password = document.getElementById("password").value;
 
-    showLoader("Тизимга кирилмоқда...");
-    try {
-        localStorage.setItem("userPhone", phone || "+998 88 888 88 88");
-        localStorage.setItem("userPassword", password || "1");
-        showScreen("main");
-        showView("home");
-        await loadDashboardData();
-        hideLoader();
-    } catch (err) {
-        showScreen("main");
-        showView("home");
-        hideLoader();
+    showLoader(currentLang === 'latn' ? "Tizimga kirilmoqda..." : "Тизимга кирилмоқда...");
+    
+    localStorage.setItem("userPhone", phone || "+998 88 888 88 88");
+    localStorage.setItem("userPassword", password || "1");
+    showScreen("main");
+    showView("home");
+    
+    // Load cached dashboard data silently without making server request on login
+    const cached = localStorage.getItem('cachedDashboardData');
+    if (cached) {
+        try {
+            dashboardData = JSON.parse(cached);
+            renderDashboard();
+        } catch (err) {
+            console.warn("Cached data parse error:", err);
+        }
     }
+    hideLoader();
 }
+
 
 
 function checkCredentialsLocally(phone, password, employeeList) {
