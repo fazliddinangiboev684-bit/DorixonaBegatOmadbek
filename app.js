@@ -1421,14 +1421,14 @@ function renderSublistItems() {
         container.innerHTML = list.map(item => `
             <div class="partner-card" onclick="openSverka('${item.Поставщик}')">
                 <div class="partner-info">
-                    <span class="partner-name">${item.Поставщик}</span>
-                    <span class="partner-phone">${item.Телефон || 'Телефон киритилмаган'}</span>
+                    <span class="partner-name">${toLatin(item.Поставщик)}</span>
+                    <span class="partner-phone">${item.Телефон || (currentLang === 'latn' ? 'Telefon kiritilmagan' : 'Телефон киритилмаган')}</span>
                 </div>
                 <div class="partner-debt-details">
-                    <span class="partner-debt-lbl">Жами қарз</span>
+                    <span class="partner-debt-lbl">${currentLang === 'latn' ? 'Jami qarz' : 'Жами қарз'}</span>
                     <span class="partner-val-total" style="color: var(--accent-amber);">${formatMoney(item.Хакки)}</span>
                     ${Number(item.МуддатиКелганХакки) > 0 ? `
-                        <span class="partner-val-overdue">Муддати: ${formatMoney(item.МуддатиКелганХакки)}</span>
+                        <span class="partner-val-overdue">${currentLang === 'latn' ? 'Muddati:' : 'Муддати:'} ${formatMoney(item.МуддатиКелганХакки)}</span>
                     ` : ''}
                 </div>
             </div>
@@ -1447,18 +1447,18 @@ function renderSublistItems() {
         }
 
         if (list.length === 0) {
-            container.innerHTML = `<div style="color: var(--text-muted); text-align: center; padding: 40px;">Қарздор харидорлар мавжуд эмас</div>`;
+            container.innerHTML = `<div style="color: var(--text-muted); text-align: center; padding: 40px;">${currentLang === 'latn' ? "Qarzdor xaridorlar mavjud emas" : "Қарздор харидорлар мавжуд эмас"}</div>`;
             return;
         }
 
         container.innerHTML = list.map(item => `
             <div class="partner-card" onclick="openSverka('${item.Клиент}')">
                 <div class="partner-info">
-                    <span class="partner-name">${item.Клиент}</span>
-                    <span class="partner-phone">${item.Телефон || 'Телефон киритилмаган'}</span>
+                    <span class="partner-name">${toLatin(item.Клиент)}</span>
+                    <span class="partner-phone">${item.Телефон || (currentLang === 'latn' ? 'Telefon kiritilmagan' : 'Телефон киритилмаган')}</span>
                 </div>
                 <div class="partner-debt-details">
-                    <span class="partner-debt-lbl">Олинадиган қарз</span>
+                    <span class="partner-debt-lbl">${currentLang === 'latn' ? 'Olinadigan qarz' : 'Олинадиган қарз'}</span>
                     <span class="partner-val-total" style="color: var(--accent-rose);">${formatMoney(item.Карз)}</span>
                 </div>
             </div>
@@ -1475,7 +1475,7 @@ function renderSublistItems() {
         }
 
         if (list.length === 0) {
-            container.innerHTML = `<div style="color: var(--text-muted); text-align: center; padding: 40px;">Товарлар топилмади</div>`;
+            container.innerHTML = `<div style="color: var(--text-muted); text-align: center; padding: 40px;">${currentLang === 'latn' ? "Tovarlar topilmadi" : "Товарлар топилмади"}</div>`;
             return;
         }
 
@@ -1499,20 +1499,20 @@ function renderSublistItems() {
             return `
             <div class="item-card">
                 <div class="item-card-header">
-                    <span class="item-name">${item.Товар}</span>
+                    <span class="item-name">${toLatin(item.Товар)}</span>
                     <span class="badge badge-emerald">${formatPacks(item.ОстатокДона, item.Шт)}</span>
                 </div>
                 <div class="item-card-details">
                     <div class="detail-row">
-                        <span class="detail-lbl">Сотув Нархи (Почка)</span>
+                        <span class="detail-lbl">${currentLang === 'latn' ? 'Sotuv Narxi (Pochka)' : 'Сотув Нархи (Почка)'}</span>
                         <span class="detail-val cyan">${formatMoney(packRetailPrice)}</span>
                     </div>
                     <div class="detail-row">
-                        <span class="detail-lbl">Кирим Нархи (Почка)</span>
+                        <span class="detail-lbl">${currentLang === 'latn' ? 'Kirim Narxi (Pochka)' : 'Кирим Нархи (Почка)'}</span>
                         <span class="detail-val">${formatMoney(packPurchasePrice)}</span>
                     </div>
                     <div class="detail-row" style="grid-column: span 2;">
-                        <span class="detail-lbl">Муддати</span>
+                        <span class="detail-lbl">${currentLang === 'latn' ? 'Muddati' : 'Муддати'}</span>
                         <span class="detail-val ${item.Срок ? 'rose' : ''}">${item.Срок || '—'}</span>
                     </div>
                 </div>
@@ -1523,7 +1523,7 @@ function renderSublistItems() {
         if (list.length > maxRender) {
             html += `
                 <div style="grid-column: span 2; text-align: center; color: var(--text-secondary); background: rgba(255,255,255,0.03); padding: 14px; border-radius: 12px; font-size: 0.8rem; border: 1px dashed var(--card-border); margin-top: 10px; width: 100%;">
-                    ⚠️ Яна ${list.length - maxRender} та товар бор. Рўйхатни қисқартириш учун қидирув сўзини аниқлаштиринг.
+                    ⚠️ ${currentLang === 'latn' ? `Yana ${list.length - maxRender} ta tovar bor. Ro'yxatni qisqartirish uchun qidiruv so'zini aniqlashtiring.` : `Яна ${list.length - maxRender} та товар бор. Рўйхатни қисқартириш учун қидирув сўзини аниқлаштиринг.`}
                 </div>
             `;
         }
@@ -1555,7 +1555,7 @@ function renderSublistItems() {
 
 
         if (list.length === 0) {
-            container.innerHTML = `<div style="color: var(--text-muted); text-align: center; padding: 40px;">Товар кирими мавжуд эмас</div>`;
+            container.innerHTML = `<div style="color: var(--text-muted); text-align: center; padding: 40px;">${currentLang === 'latn' ? "Tovar kirimi mavjud emas" : "Товар кирими мавжуд эмас"}</div>`;
             return;
         }
 
@@ -1568,8 +1568,8 @@ function renderSublistItems() {
             <div class="receipt-doc-card" onclick="openReceiptDetail('${docId}')">
                 <div class="receipt-doc-icon">📥</div>
                 <div class="receipt-doc-info">
-                    <div class="receipt-doc-supplier">${supplier}</div>
-                    <div class="receipt-doc-meta">${doc.Дата || ''} &nbsp;•&nbsp; ${itemCount} та товар</div>
+                    <div class="receipt-doc-supplier">${toLatin(supplier)}</div>
+                    <div class="receipt-doc-meta">${doc.Дата || ''} &nbsp;•&nbsp; ${itemCount} ${currentLang === 'latn' ? 'ta tovar' : 'та товар'}</div>
                 </div>
                 <div class="receipt-doc-right">
                     <span class="receipt-doc-sum">${formatMoney(doc.Сумма)}</span>
@@ -1609,15 +1609,35 @@ function renderSublistItems() {
         }
 
         if (list.length === 0) {
-            container.innerHTML = `<div style="color: var(--text-muted); text-align: center; padding: 40px;">Касса чиқими мавжуд эмас</div>`;
+            container.innerHTML = `<div style="color: var(--text-muted); text-align: center; padding: 40px;">${currentLang === 'latn' ? "Kassa chiqimi mavjud emas" : "Касса чиқими мавжуд эмас"}</div>`;
             return;
         }
 
         container.innerHTML = list.map(item => `
             <div class="item-card">
                 <div class="item-card-header">
-                    <span class="item-name">${item.Списка}</span>
+                    <span class="item-name">${toLatin(item.Списка)}</span>
                     <span class="badge badge-rose">${formatMoney(item.Сумма)}</span>
+                </div>
+                <div class="item-card-details">
+                    <div class="detail-row">
+                        <span class="detail-lbl">${currentLang === 'latn' ? 'Guruh' : 'Гуруҳ'}</span>
+                        <span class="detail-val amber">${toLatin(item.Группа || '—')}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-lbl">${currentLang === 'latn' ? 'Sana' : 'Сана'}</span>
+                        <span class="detail-val">${item.Дата || '—'}</span>
+                    </div>
+                    ${item.Изох ? `
+                        <div class="detail-row" style="grid-column: span 2;">
+                            <span class="detail-lbl">${currentLang === 'latn' ? 'Izoh' : 'Изоҳ'}</span>
+                            <span class="detail-val text-muted">${toLatin(item.Изох)}</span>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `).join('');
+
                 </div>
                 <div class="item-card-details">
                     <div class="detail-row">
