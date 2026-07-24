@@ -327,10 +327,10 @@ document.addEventListener("DOMContentLoaded", () => {
         runInitialFormats();
         setTimeout(runInitialFormats, 100);
         setTimeout(runInitialFormats, 300);
+        setTimeout(runInitialFormats, 800);
+        setTimeout(runInitialFormats, 1500);
     }
 
-    setTimeout(runInitialFormats, 800);
-    setTimeout(runInitialFormats, 1500);
 
     // Handle login submit form
     document.getElementById("login-form").addEventListener("submit", handleLoginSubmit);
