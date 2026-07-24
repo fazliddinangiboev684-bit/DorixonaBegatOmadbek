@@ -438,7 +438,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const savedPassword = localStorage.getItem('userPassword');
     
     // Prefill phone and password fields if they exist in cache
-    let savedPhone = localStorage.getItem('userPhone');
     if (!savedPhone || savedPhone.replace(/\D/g, '').length > 9) {
         savedPhone = "88 888 88 88";
         localStorage.setItem('userPhone', savedPhone);
@@ -1708,27 +1707,6 @@ function renderSublistItems() {
             </div>
         `).join('');
 
-                </div>
-                <div class="item-card-details">
-                    <div class="detail-row">
-                        <span class="detail-lbl">Гуруҳ</span>
-                        <span class="detail-val amber">${item.Группа || '—'}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-lbl">Сана</span>
-                        <span class="detail-val cyan">${item.Дата}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-lbl">Тўлов тури</span>
-                        <span class="detail-val">${item.ТуловТури || '—'}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-lbl">Изоҳ</span>
-                        <span class="detail-val" style="color: var(--text-secondary);">${item.Изох || '—'}</span>
-                    </div>
-                </div>
-            </div>
-        `).join('');
     } else if (sublistType === "expiring") {
         let list = dashboardData.СрокТоварлар || [];
         const expiringDays = getExpiringDays();
