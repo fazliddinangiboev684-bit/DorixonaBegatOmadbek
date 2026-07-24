@@ -216,7 +216,6 @@ function showScreen(screenId) {
 
 /* ==================== DOM CONTENT LOADED ==================== */
 document.addEventListener("DOMContentLoaded", () => {
-    initSettings();
     loadFirmName();
     applyLanguage(); // Apply saved language on every page load
 
