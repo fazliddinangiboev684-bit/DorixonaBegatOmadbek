@@ -266,14 +266,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // Settings modal triggers
-    const loginSettingsBtn = document.getElementById("settings-btn-login");
+    const loginSettingsBtn = document.getElementById("login-settings-btn");
     if (loginSettingsBtn) {
         loginSettingsBtn.addEventListener("click", openSettingsModal);
     }
     
-    const settingsBtnDash = document.getElementById("settings-btn-dash");
-    if (settingsBtnDash) {
-        settingsBtnDash.addEventListener("click", openSettingsModal);
+    const menuSettingsBtn = document.getElementById("menu-btn-settings");
+    if (menuSettingsBtn) {
+        menuSettingsBtn.addEventListener("click", openSettingsModal);
     }
     
     const closeSettingsBtn = document.getElementById("close-settings-btn");
@@ -295,35 +295,9 @@ document.addEventListener("DOMContentLoaded", () => {
         testSettingsBtn.addEventListener("click", testServerConnection);
     }
 
-    // Auto-formatting phone number input as: 90 123 45 67
+    // Phone input handling without destructive reformatting
     const phoneInput = document.getElementById("phone");
-    const formatPhone = (e) => {
-        let rawVal = e.target.value.replace(/\D/g, ''); // Extract only digits
-        
-        // Strip out +998 from start if user pasted it
-        if (rawVal.startsWith('998') && rawVal.length > 3) {
-            rawVal = rawVal.substring(3);
-        }
-        
-        // Match segments
-        let match = rawVal.match(/(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
-        if (!match) {
-            e.target.value = '';
-            return;
-        }
-        
-        let formatted = '';
-        if (match[1]) formatted += match[1];
-        if (match[2]) formatted += ' ' + match[2];
-        if (match[3]) formatted += ' ' + match[3];
-        if (match[4]) formatted += ' ' + match[4];
-        
-        e.target.value = formatted.trim();
-    };
 
-    phoneInput.addEventListener("input", formatPhone);
-    phoneInput.addEventListener("change", formatPhone);
-    phoneInput.addEventListener("blur", formatPhone);
 
     // Format prefilled or autofilled values (especially from browser password managers)
     const runInitialFormats = () => {
