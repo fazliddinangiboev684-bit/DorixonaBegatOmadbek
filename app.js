@@ -1054,7 +1054,6 @@ async function loadDashboardData(section = "") {
         }
         
         renderDashboard();
-        showStatusBanner("Маълумотлар янгиланди", "info");
         hideLoader();
     } catch (err) {
         console.error("Dashboard Load Error:", err);
@@ -1063,13 +1062,9 @@ async function loadDashboardData(section = "") {
             try {
                 dashboardData = JSON.parse(cachedData);
                 renderDashboard();
-                showStatusBanner("Серверга уланиш мумкин бўлмади. Кэш маълумотлар кўрсатилаётгани", "warning");
             } catch (parseErr) {
                 console.error("Cached Dashboard Parse Error:", parseErr);
-                showStatusBanner("Маълумотлар юкланмади. Кэш маълумотлари ҳам мавжуд эмас.", "warning");
             }
-        } else {
-            showStatusBanner("Серверга уланиш мумкин бўлмади", "warning");
         }
         hideLoader();
     }
