@@ -294,6 +294,15 @@ document.addEventListener("DOMContentLoaded", () => {
         testSettingsBtn.addEventListener("click", testServerConnection);
     }
 
+    const settingsModalEl = document.getElementById("settings-modal");
+    if (settingsModalEl) {
+        settingsModalEl.addEventListener("click", (e) => {
+            if (e.target === settingsModalEl) {
+                closeSettingsModal();
+            }
+        });
+    }
+
     // Auto-formatting phone number input as: 88 888 88 88
     const phoneInput = document.getElementById("phone");
     const formatPhone = (e) => {

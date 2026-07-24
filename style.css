@@ -1570,14 +1570,12 @@ button:active {
     cursor: default;
     background-color: #f1f3f5;
     color: #2196F3;
-    pointer-events: none;
 }
 
 .settings-input-wrapper input.editable {
     background-color: #ffffff;
     border-color: rgba(33, 150, 243, 0.4);
     box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
-    pointer-events: auto;
 }
 
 .settings-buttons-row {
