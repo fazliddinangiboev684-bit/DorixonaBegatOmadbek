@@ -457,21 +457,25 @@ document.addEventListener("DOMContentLoaded", () => {
     const savedPassword = localStorage.getItem('userPassword');
     
     // Prefill phone and password fields if they exist in cache
-    if (savedPhone) {
-        let digits = savedPhone.replace(/\D/g, '');
-        if (digits.startsWith('998') && digits.length > 9) digits = digits.substring(3);
-        if (digits.length >= 9) {
-            document.getElementById("phone").value = `${digits.slice(0,2)} ${digits.slice(2,5)} ${digits.slice(5,7)} ${digits.slice(7,9)}`;
-        } else {
-            document.getElementById("phone").value = savedPhone;
-        }
-    } else {
-        document.getElementById("phone").value = "88 888 88 88";
+    let savedPhone = localStorage.getItem('userPhone');
+    if (!savedPhone || savedPhone.replace(/\D/g, '').length > 9) {
+        savedPhone = "88 888 88 88";
+        localStorage.setItem('userPhone', savedPhone);
     }
+    
+    let formattedPhone = savedPhone;
+    let digits = savedPhone.replace(/\D/g, '');
+    if (digits.startsWith('998') && digits.length > 9) digits = digits.substring(3);
+    if (digits.length >= 9) {
+        digits = digits.substring(0, 9);
+        formattedPhone = `${digits.slice(0,2)} ${digits.slice(2,5)} ${digits.slice(5,7)} ${digits.slice(7,9)}`;
+    }
+    document.getElementById("phone").value = formattedPhone;
 
     if (savedPassword) {
         document.getElementById("password").value = savedPassword;
     }
+
 
     if (savedPhone && savedPassword && employeesStr) {
         try {
@@ -641,21 +645,22 @@ function toggleSettingsEditMode() {
     }
 }
 
-function openSettingsModal() {
+window.openSettingsModal = function openSettingsModal() {
     settingsEditMode = false;
     
-    document.getElementById("settings-host").value = localStorage.getItem('serverHost') || 'localhost';
-    document.getElementById("settings-pub").value = localStorage.getItem('serverPublication') || 'bossAPI';
-    document.getElementById("settings-service").value = localStorage.getItem('serverService') || 'app';
+    const hostEl = document.getElementById("settings-host");
+    if (hostEl) hostEl.value = localStorage.getItem('serverHost') || 'localhost';
+    
+    const pubEl = document.getElementById("settings-pub");
+    if (pubEl) pubEl.value = localStorage.getItem('serverPublication') || 'bossAPI';
+    
+    const serviceEl = document.getElementById("settings-service");
+    if (serviceEl) serviceEl.value = localStorage.getItem('serverService') || 'app';
+    
     const langSel = document.getElementById("settings-lang");
     if (langSel) langSel.value = localStorage.getItem('appLang') || 'cyrl';
     
-    // Set all to readOnly initially
-    const inputs = [
-        document.getElementById("settings-host"),
-        document.getElementById("settings-pub"),
-        document.getElementById("settings-service")
-    ];
+    const inputs = [hostEl, pubEl, serviceEl];
     inputs.forEach(input => {
         if (input) {
             input.readOnly = true;
@@ -666,12 +671,20 @@ function openSettingsModal() {
     const editBtn = document.getElementById("edit-settings-btn");
     if (editBtn) editBtn.classList.remove("active");
 
-    document.getElementById("settings-modal").style.display = "flex";
-}
+    const modal = document.getElementById("settings-modal");
+    if (modal) {
+        modal.style.display = "flex";
+        modal.style.zIndex = "99999";
+    }
+};
 
-function closeSettingsModal() {
-    document.getElementById("settings-modal").style.display = "none";
-}
+window.closeSettingsModal = function closeSettingsModal() {
+    const modal = document.getElementById("settings-modal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+};
+
 
 async function testServerConnection() {
     const host = document.getElementById("settings-host").value.trim();
