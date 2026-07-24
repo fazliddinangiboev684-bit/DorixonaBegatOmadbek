@@ -1549,9 +1549,9 @@ button:active {
 
 .settings-input-wrapper input {
     width: 100%;
-    background-color: #f1f3f5;
-    color: #2196F3;
-    border: 1px solid transparent;
+    background-color: #ffffff;
+    color: #1a202c;
+    border: 2px solid #cbd5e0;
     outline: none;
     border-radius: 12px;
     padding: 14px 20px;
@@ -1559,25 +1559,27 @@ button:active {
     font-weight: 600;
     box-sizing: border-box;
     transition: all 0.2s ease;
+    cursor: text;
 }
 
 .settings-input-wrapper input::placeholder {
-    color: rgba(33, 150, 243, 0.6);
+    color: #a0aec0;
     font-weight: 500;
 }
 
 .settings-input-wrapper input[readonly] {
-    cursor: default;
-    background-color: #f1f3f5 !important;
-    color: #2196F3 !important;
-    border: 1px solid transparent !important;
+    cursor: pointer;
+    background-color: #f7fafc !important;
+    color: #2b6cb0 !important;
+    border: 1.5px solid #cbd5e0 !important;
 }
 
-.settings-input-wrapper input.editable {
+.settings-input-wrapper input.editable,
+.settings-input-wrapper input:focus {
     background-color: #ffffff !important;
     color: #1a202c !important;
-    border: 2px solid #2196F3 !important;
-    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.15) !important;
+    border: 2.5px solid #2196F3 !important;
+    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.2) !important;
     cursor: text !important;
 }
 
