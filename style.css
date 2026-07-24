@@ -196,21 +196,29 @@ button:active {
 
 .login-settings-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
+    top: 16px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    font-size: 1.3rem;
     cursor: pointer;
-    color: var(--text-secondary);
-    transition: transform 0.2s, color 0.2s;
-    z-index: 10;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 999;
 }
 
 .login-settings-btn:hover {
-    transform: rotate(45deg);
-    color: #2196F3;
+    transform: rotate(45deg) scale(1.08);
+    background: rgba(33, 150, 243, 0.25);
+    border-color: #2196F3;
 }
+
 
 .logo-section {
     display: flex;
