@@ -218,6 +218,7 @@ function showScreen(screenId) {
 document.addEventListener("DOMContentLoaded", () => {
     initSettings();
     loadFirmName();
+    applyLanguage(); // Apply saved language on every page load
 
 
     // 1. Setup Date Selectors
@@ -486,6 +487,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (res.success) {
                 showScreen("main");
                 showView("home");
+                applyLanguage();
                 loadDashboardData();
                 return;
             }
