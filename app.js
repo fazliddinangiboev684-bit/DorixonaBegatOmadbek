@@ -688,6 +688,12 @@ window.closeSettingsModal = function closeSettingsModal() {
 
 
 window.testServerConnection = async function testServerConnection() {
+    // Force unlock inputs before reading (readonly blocks value in some browsers)
+    ["settings-host", "settings-pub", "settings-service"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.removeAttribute("readonly"); el.readOnly = false; }
+    });
+
     const host = document.getElementById("settings-host").value.trim();
     const pub = document.getElementById("settings-pub").value.trim();
     const service = document.getElementById("settings-service").value.trim();
@@ -758,6 +764,12 @@ window.testServerConnection = async function testServerConnection() {
 
 
 window.saveSettings = function saveSettings() {
+    // Force unlock inputs before reading (readonly blocks value in some browsers)
+    ["settings-host", "settings-pub", "settings-service"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.removeAttribute("readonly"); el.readOnly = false; }
+    });
+
     const host = document.getElementById("settings-host").value.trim();
     const pub = document.getElementById("settings-pub").value.trim();
     const service = document.getElementById("settings-service").value.trim();
