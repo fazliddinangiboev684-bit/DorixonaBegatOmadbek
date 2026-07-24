@@ -21,7 +21,8 @@
         <!-- ==================== LOGIN SCREEN ==================== -->
         <div id="login-screen" class="login-screen">
             <div class="login-card">
-                <button id="login-settings-btn" class="login-settings-btn" title="Созламалар">⚙️</button>
+                <button id="login-settings-btn" class="login-settings-btn" title="Созламалар" onclick="openSettingsModal()">⚙️</button>
+
                 <div class="logo-section">
                     <div class="logo-icon-bg">
                         <svg viewBox="0 0 110 100" width="110" height="100" class="animated-logo-star" xmlns="http://www.w3.org/2000/svg">
@@ -204,10 +205,11 @@
                         <span class="menu-label">Касса чиқими</span>
                     </div>
                     <!-- 7. Settings -->
-                    <div class="menu-item-container" id="menu-btn-settings">
+                    <div class="menu-item-container" id="menu-btn-settings" onclick="openSettingsModal()">
                         <div class="menu-circle">⚙️</div>
                         <span class="menu-label">Созламалар</span>
                     </div>
+
                 </div>
 
                 <button id="logout-btn" class="logout-button-main" title="Чиқиш">⏻ Чиқиш</button>
@@ -617,6 +619,7 @@
 
     </div>
 
-    <script src="app.js?v=20260724c"></script>
+    <script src="app.js?v=20260724d"></script>
+
 </body>
 </html>
