@@ -264,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
         logoutBtn.addEventListener("click", handleLogout);
     }
     
-    // Settings modal backdrop click trigger
+    // Settings modal backdrop — click outside to close
     const settingsModalEl = document.getElementById("settings-modal");
     if (settingsModalEl) {
         settingsModalEl.addEventListener("click", (e) => {
@@ -273,8 +273,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
-
 
     // Auto-formatting phone number input as: 88 888 88 88
     const phoneInput = document.getElementById("phone");
@@ -297,6 +295,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (phoneInput) {
         phoneInput.addEventListener("input", formatPhone);
+        phoneInput.addEventListener("keyup", formatPhone);
+        phoneInput.addEventListener("paste", () => setTimeout(() => formatPhone({ target: phoneInput }), 0));
         phoneInput.addEventListener("change", formatPhone);
         phoneInput.addEventListener("blur", formatPhone);
 
@@ -597,13 +597,8 @@ function applyLanguage() {
 /* ==================== SETTINGS MODAL CONTROLS ==================== */
 let settingsEditMode = false;
 
-window.toggleSettingsEditMode = function toggleSettingsEditMode(forceState) {
-    if (typeof forceState === "boolean") {
-        settingsEditMode = forceState;
-    } else {
-        settingsEditMode = !settingsEditMode;
-    }
-
+window.toggleSettingsEditMode = function toggleSettingsEditMode() {
+    settingsEditMode = !settingsEditMode;
     const inputs = [
         document.getElementById("settings-host"),
         document.getElementById("settings-pub"),
@@ -634,10 +629,6 @@ window.toggleSettingsEditMode = function toggleSettingsEditMode(forceState) {
     if (settingsEditMode && inputs[0]) {
         inputs[0].focus();
     }
-};
-
-window.enableSettingsEdit = function enableSettingsEdit() {
-    window.toggleSettingsEditMode(true);
 };
 
 window.populateSettingsFields = function populateSettingsFields() {
@@ -688,7 +679,7 @@ window.closeSettingsModal = function closeSettingsModal() {
 
 
 window.testServerConnection = async function testServerConnection() {
-    // Force unlock inputs before reading (readonly blocks value in some browsers)
+    // Force-unlock inputs so readonly doesn't block value reading
     ["settings-host", "settings-pub", "settings-service"].forEach(id => {
         const el = document.getElementById(id);
         if (el) { el.removeAttribute("readonly"); el.readOnly = false; }
@@ -764,7 +755,7 @@ window.testServerConnection = async function testServerConnection() {
 
 
 window.saveSettings = function saveSettings() {
-    // Force unlock inputs before reading (readonly blocks value in some browsers)
+    // Force-unlock inputs so readonly doesn't block value reading
     ["settings-host", "settings-pub", "settings-service"].forEach(id => {
         const el = document.getElementById(id);
         if (el) { el.removeAttribute("readonly"); el.readOnly = false; }
