@@ -1568,14 +1568,17 @@ button:active {
 
 .settings-input-wrapper input[readonly] {
     cursor: default;
-    background-color: #f1f3f5;
-    color: #2196F3;
+    background-color: #f1f3f5 !important;
+    color: #2196F3 !important;
+    border: 1px solid transparent !important;
 }
 
 .settings-input-wrapper input.editable {
-    background-color: #ffffff;
-    border-color: rgba(33, 150, 243, 0.4);
-    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    background-color: #ffffff !important;
+    color: #1a202c !important;
+    border: 2px solid #2196F3 !important;
+    box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.15) !important;
+    cursor: text !important;
 }
 
 .settings-buttons-row {

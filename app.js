@@ -624,7 +624,7 @@ function applyLanguage() {
 /* ==================== SETTINGS MODAL CONTROLS ==================== */
 let settingsEditMode = false;
 
-function toggleSettingsEditMode() {
+window.toggleSettingsEditMode = function toggleSettingsEditMode() {
     settingsEditMode = !settingsEditMode;
     const inputs = [
         document.getElementById("settings-host"),
@@ -637,8 +637,10 @@ function toggleSettingsEditMode() {
         if (input) {
             input.readOnly = !settingsEditMode;
             if (settingsEditMode) {
+                input.removeAttribute("readonly");
                 input.classList.add("editable");
             } else {
+                input.setAttribute("readonly", "readonly");
                 input.classList.remove("editable");
             }
         }
@@ -651,7 +653,10 @@ function toggleSettingsEditMode() {
             editBtn.classList.remove("active");
         }
     }
-}
+    if (settingsEditMode && inputs[0]) {
+        inputs[0].focus();
+    }
+};
 
 window.populateSettingsFields = function populateSettingsFields() {
     settingsEditMode = false;
@@ -672,6 +677,7 @@ window.populateSettingsFields = function populateSettingsFields() {
     inputs.forEach(input => {
         if (input) {
             input.readOnly = true;
+            input.setAttribute("readonly", "readonly");
             input.classList.remove("editable");
         }
     });
@@ -699,7 +705,7 @@ window.closeSettingsModal = function closeSettingsModal() {
 
 
 
-async function testServerConnection() {
+window.testServerConnection = async function testServerConnection() {
     const host = document.getElementById("settings-host").value.trim();
     const pub = document.getElementById("settings-pub").value.trim();
     const service = document.getElementById("settings-service").value.trim();
@@ -766,10 +772,10 @@ async function testServerConnection() {
     } finally {
         hideLoader();
     }
-}
+};
 
 
-function saveSettings() {
+window.saveSettings = function saveSettings() {
     const host = document.getElementById("settings-host").value.trim();
     const pub = document.getElementById("settings-pub").value.trim();
     const service = document.getElementById("settings-service").value.trim();
