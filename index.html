@@ -14,7 +14,26 @@
     <!-- Google Fonts: Outfit -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=20260707a">
+    <script>
+        function openSettingsModal() {
+            var modal = document.getElementById("settings-modal");
+            if (modal) {
+                modal.style.display = "flex";
+                modal.style.zIndex = "999999";
+            }
+            if (typeof window.populateSettingsFields === "function") {
+                window.populateSettingsFields();
+            }
+        }
+        function closeSettingsModal() {
+            var modal = document.getElementById("settings-modal");
+            if (modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </head>
+
 <body>
     <div class="app-container">
         

@@ -644,7 +644,7 @@ function toggleSettingsEditMode() {
     }
 }
 
-window.openSettingsModal = function openSettingsModal() {
+window.populateSettingsFields = function populateSettingsFields() {
     settingsEditMode = false;
     
     const hostEl = document.getElementById("settings-host");
@@ -669,11 +669,15 @@ window.openSettingsModal = function openSettingsModal() {
 
     const editBtn = document.getElementById("edit-settings-btn");
     if (editBtn) editBtn.classList.remove("active");
+};
+
+window.openSettingsModal = function openSettingsModal() {
+    window.populateSettingsFields();
 
     const modal = document.getElementById("settings-modal");
     if (modal) {
         modal.style.display = "flex";
-        modal.style.zIndex = "99999";
+        modal.style.zIndex = "999999";
     }
 };
 
@@ -683,6 +687,7 @@ window.closeSettingsModal = function closeSettingsModal() {
         modal.style.display = "none";
     }
 };
+
 
 
 async function testServerConnection() {
