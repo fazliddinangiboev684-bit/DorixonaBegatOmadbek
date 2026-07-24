@@ -463,18 +463,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Prefill phone and password fields if they exist in cache
     if (savedPhone) {
-        let rawPhone = savedPhone.replace(/\D/g, '');
-        if (rawPhone.startsWith('998') && rawPhone.length > 3) {
-            rawPhone = rawPhone.substring(3);
-        }
-        let match = rawPhone.match(/(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
-        if (match) {
-            let formatted = (match[1] || '') + 
-                            (match[2] ? ' ' + match[2] : '') + 
-                            (match[3] ? ' ' + match[3] : '') + 
-                            (match[4] ? ' ' + match[4] : '');
-            document.getElementById("phone").value = formatted.trim();
-        }
+        // Show as-is without reformatting to preserve user's original format
+        document.getElementById("phone").value = savedPhone;
     }
     if (savedPassword) {
         document.getElementById("password").value = savedPassword;
