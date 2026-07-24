@@ -264,36 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
         logoutBtn.addEventListener("click", handleLogout);
     }
     
-    // Settings modal triggers
-    const loginSettingsBtn = document.getElementById("login-settings-btn");
-    if (loginSettingsBtn) {
-        loginSettingsBtn.addEventListener("click", openSettingsModal);
-    }
-    
-    const menuSettingsBtn = document.getElementById("menu-btn-settings");
-    if (menuSettingsBtn) {
-        menuSettingsBtn.addEventListener("click", openSettingsModal);
-    }
-    
-    const closeSettingsBtn = document.getElementById("close-settings-btn");
-    if (closeSettingsBtn) {
-        closeSettingsBtn.addEventListener("click", closeSettingsModal);
-    }
-    
-    const saveSettingsBtn = document.getElementById("save-settings-btn");
-    if (saveSettingsBtn) {
-        saveSettingsBtn.addEventListener("click", saveSettings);
-    }
-    
-    const editSettingsBtn = document.getElementById("edit-settings-btn");
-    if (editSettingsBtn) {
-        editSettingsBtn.addEventListener("click", toggleSettingsEditMode);
-    }
-    const testSettingsBtn = document.getElementById("test-settings-btn");
-    if (testSettingsBtn) {
-        testSettingsBtn.addEventListener("click", testServerConnection);
-    }
-
+    // Settings modal backdrop click trigger
     const settingsModalEl = document.getElementById("settings-modal");
     if (settingsModalEl) {
         settingsModalEl.addEventListener("click", (e) => {
@@ -302,6 +273,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+
 
     // Auto-formatting phone number input as: 88 888 88 88
     const phoneInput = document.getElementById("phone");
