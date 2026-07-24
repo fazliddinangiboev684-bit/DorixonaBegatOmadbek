@@ -597,8 +597,12 @@ function applyLanguage() {
 /* ==================== SETTINGS MODAL CONTROLS ==================== */
 let settingsEditMode = false;
 
-window.toggleSettingsEditMode = function toggleSettingsEditMode() {
-    settingsEditMode = !settingsEditMode;
+window.toggleSettingsEditMode = function toggleSettingsEditMode(forceState) {
+    if (typeof forceState === "boolean") {
+        settingsEditMode = forceState;
+    } else {
+        settingsEditMode = !settingsEditMode;
+    }
     const inputs = [
         document.getElementById("settings-host"),
         document.getElementById("settings-pub"),
@@ -628,6 +632,12 @@ window.toggleSettingsEditMode = function toggleSettingsEditMode() {
     }
     if (settingsEditMode && inputs[0]) {
         inputs[0].focus();
+    }
+};
+
+window.enableSettingsEdit = function enableSettingsEdit() {
+    if (!settingsEditMode) {
+        window.toggleSettingsEditMode(true);
     }
 };
 
