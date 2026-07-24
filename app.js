@@ -295,19 +295,40 @@ document.addEventListener("DOMContentLoaded", () => {
         testSettingsBtn.addEventListener("click", testServerConnection);
     }
 
-    // Phone input handling without destructive reformatting
+    // Auto-formatting phone number input as: 88 888 88 88
     const phoneInput = document.getElementById("phone");
-
-
-    // Format prefilled or autofilled values (especially from browser password managers)
-    const runInitialFormats = () => {
-        if (phoneInput.value) {
-            formatPhone({ target: phoneInput });
+    const formatPhone = (e) => {
+        if (!e || !e.target) return;
+        let digits = e.target.value.replace(/\D/g, '');
+        if (digits.startsWith('998') && digits.length > 9) {
+            digits = digits.substring(3);
         }
+        if (digits.length > 9) {
+            digits = digits.substring(0, 9);
+        }
+        let res = '';
+        if (digits.length > 0) res += digits.slice(0, 2);
+        if (digits.length > 2) res += ' ' + digits.slice(2, 5);
+        if (digits.length > 5) res += ' ' + digits.slice(5, 7);
+        if (digits.length > 7) res += ' ' + digits.slice(7, 9);
+        e.target.value = res;
     };
-    runInitialFormats();
-    setTimeout(runInitialFormats, 100);
-    setTimeout(runInitialFormats, 300);
+
+    if (phoneInput) {
+        phoneInput.addEventListener("input", formatPhone);
+        phoneInput.addEventListener("change", formatPhone);
+        phoneInput.addEventListener("blur", formatPhone);
+
+        const runInitialFormats = () => {
+            if (phoneInput.value) {
+                formatPhone({ target: phoneInput });
+            }
+        };
+        runInitialFormats();
+        setTimeout(runInitialFormats, 100);
+        setTimeout(runInitialFormats, 300);
+    }
+
     setTimeout(runInitialFormats, 800);
     setTimeout(runInitialFormats, 1500);
 
